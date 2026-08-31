@@ -1,0 +1,65 @@
+export default {
+  common: {
+    save: "Save", cancel: "Cancel", delete: "Delete", edit: "Edit",
+    loading: "Loading...", retry: "Retry", skip: "Skip", next: "Next",
+    getStarted: "Get Started", search: "Search", filter: "Filter",
+    sort: "Sort", all: "All",
+  },
+  onboarding: {
+    page1Title: "Track Every Expense",
+    page1Subtitle: "Record every transaction in seconds.",
+    page2Title: "Manage Your Budget",
+    page2Subtitle: "Create monthly budgets and receive smart alerts.",
+    page3Title: "Visual Analytics",
+    page3Subtitle: "Understand your spending with beautiful charts.",
+  },
+  auth: {
+    login: "Log In", register: "Create Account", email: "Email",
+    emailOrPhone: "Email or Phone Number", password: "Password",
+    confirmPassword: "Confirm Password", fullName: "Full Name",
+    forgotPassword: "Forgot Password?", biometricLogin: "Log in with Face ID / Fingerprint",
+    dontHaveAccount: "Don't have an account?", alreadyHaveAccount: "Already have an account?",
+    signUp: "Sign up", signIn: "Sign in", resetPassword: "Reset Password",
+    sendResetLink: "Send Reset Link", weak: "Weak", medium: "Medium", strong: "Strong",
+    currency: "Currency",
+  },
+  home: {
+    currentBalance: "Current Balance", thisMonthIncome: "This Month Income",
+    thisMonthExpense: "This Month Expense", recentTransactions: "Recent Transactions",
+    seeAll: "See all",
+  },
+  tabs: { home: "Home", analytics: "Analytics", budget: "Budget", transactions: "Transactions", settings: "Settings" },
+  transaction: {
+    income: "Income", expense: "Expense", amount: "Amount", category: "Category",
+    account: "Account", notes: "Notes", addTransaction: "Add Transaction",
+    noTransactionsTitle: "No transactions yet", noTransactionsSubtitle: "Start tracking your spending today.",
+  },
+  budget: {
+    title: "Budgets", spent: "Spent", remaining: "Remaining",
+    noBudgetsTitle: "Create your first budget", noBudgetsSubtitle: "Take control of your monthly spending.",
+  },
+  savings: {
+    noGoalsSubtitle: "Start saving for something important.",
+    addMoney: "Add Money", withdraw: "Withdraw",
+  },
+  settings: {
+    title: "Settings", profile: "Profile", appearance: "Appearance", language: "Language",
+    currency: "Currency", notifications: "Notifications", locationPermission: "Location Permission",
+    allowed: "Allowed", denied: "Denied", light: "Light", dark: "Dark", system: "System",
+    exportData: "Export Data", logout: "Log Out", biometricLoginToggle: "Enable Biometric Login",
+  },
+  category: {
+    food: "Food", transport: "Transport", shopping: "Shopping", bills: "Bills",
+    entertainment: "Entertainment", health: "Health", education: "Education",
+    salary: "Salary", business: "Business", gift: "Gift", other: "Other",
+  },
+  account: { cash: "Cash", bank: "Bank Account", wallet: "Wallet" },
+  errors: {
+    generic: "Something went wrong. Please try again.",
+    invalidEmail: "That email address doesn't look right.",
+    wrongPassword: "Incorrect email or password.",
+    emailInUse: "An account with this email already exists.",
+    weakPassword: "Please choose a stronger password.",
+    networkError: "Check your connection and try again.",
+  },
+};

@@ -1,0 +1,65 @@
+export default {
+  common: {
+    save: "সংরক্ষণ করুন", cancel: "বাতিল", delete: "মুছুন", edit: "সম্পাদনা",
+    loading: "লোড হচ্ছে...", retry: "আবার চেষ্টা করুন", skip: "এড়িয়ে যান", next: "পরবর্তী",
+    getStarted: "শুরু করুন", search: "খুঁজুন", filter: "ফিল্টার",
+    sort: "সাজান", all: "সব",
+  },
+  onboarding: {
+    page1Title: "প্রতিটি খরচ হিসাব রাখুন",
+    page1Subtitle: "কয়েক সেকেন্ডে প্রতিটি লেনদেন রেকর্ড করুন।",
+    page2Title: "আপনার বাজেট পরিচালনা করুন",
+    page2Subtitle: "মাসিক বাজেট তৈরি করুন এবং স্মার্ট সতর্কতা পান।",
+    page3Title: "ভিজ্যুয়াল অ্যানালিটিক্স",
+    page3Subtitle: "সুন্দর চার্টের মাধ্যমে আপনার খরচ বুঝুন।",
+  },
+  auth: {
+    login: "লগ ইন", register: "অ্যাকাউন্ট তৈরি করুন", email: "ইমেইল",
+    emailOrPhone: "ইমেইল বা ফোন নম্বর", password: "পাসওয়ার্ড",
+    confirmPassword: "পাসওয়ার্ড নিশ্চিত করুন", fullName: "পুরো নাম",
+    forgotPassword: "পাসওয়ার্ড ভুলে গেছেন?", biometricLogin: "ফেস আইডি / ফিঙ্গারপ্রিন্ট দিয়ে লগইন",
+    dontHaveAccount: "অ্যাকাউন্ট নেই?", alreadyHaveAccount: "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+    signUp: "সাইন আপ", signIn: "সাইন ইন", resetPassword: "পাসওয়ার্ড রিসেট করুন",
+    sendResetLink: "রিসেট লিংক পাঠান", weak: "দুর্বল", medium: "মাঝারি", strong: "শক্তিশালী",
+    currency: "মুদ্রা",
+  },
+  home: {
+    currentBalance: "বর্তমান ব্যালেন্স", thisMonthIncome: "এই মাসের আয়",
+    thisMonthExpense: "এই মাসের খরচ", recentTransactions: "সাম্প্রতিক লেনদেন",
+    seeAll: "সব দেখুন",
+  },
+  tabs: { home: "হোম", analytics: "অ্যানালিটিক্স", budget: "বাজেট", transactions: "লেনদেন", settings: "সেটিংস" },
+  transaction: {
+    income: "আয়", expense: "খরচ", amount: "পরিমাণ", category: "ক্যাটাগরি",
+    account: "অ্যাকাউন্ট", notes: "নোট", addTransaction: "লেনদেন যোগ করুন",
+    noTransactionsTitle: "এখনো কোনো লেনদেন নেই", noTransactionsSubtitle: "আজই আপনার খরচ ট্র্যাক করা শুরু করুন।",
+  },
+  budget: {
+    title: "বাজেট", spent: "খরচ হয়েছে", remaining: "বাকি আছে",
+    noBudgetsTitle: "আপনার প্রথম বাজেট তৈরি করুন", noBudgetsSubtitle: "আপনার মাসিক খরচ নিয়ন্ত্রণ করুন।",
+  },
+  savings: {
+    noGoalsSubtitle: "গুরুত্বপূর্ণ কিছুর জন্য সঞ্চয় শুরু করুন।",
+    addMoney: "টাকা যোগ করুন", withdraw: "উত্তোলন করুন",
+  },
+  settings: {
+    title: "সেটিংস", profile: "প্রোফাইল", appearance: "থিম", language: "ভাষা",
+    currency: "মুদ্রা", notifications: "নোটিফিকেশন", locationPermission: "লোকেশন অনুমতি",
+    allowed: "অনুমোদিত", denied: "প্রত্যাখ্যাত", light: "লাইট", dark: "ডার্ক", system: "সিস্টেম",
+    exportData: "ডেটা এক্সপোর্ট করুন", logout: "লগ আউট", biometricLoginToggle: "বায়োমেট্রিক লগইন চালু করুন",
+  },
+  category: {
+    food: "খাবার", transport: "যাতায়াত", shopping: "কেনাকাটা", bills: "বিল",
+    entertainment: "বিনোদন", health: "স্বাস্থ্য", education: "শিক্ষা",
+    salary: "বেতন", business: "ব্যবসা", gift: "উপহার", other: "অন্যান্য",
+  },
+  account: { cash: "নগদ", bank: "ব্যাংক অ্যাকাউন্ট", wallet: "ওয়ালেট" },
+  errors: {
+    generic: "কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+    invalidEmail: "ইমেইল ঠিকানাটি সঠিক মনে হচ্ছে না।",
+    wrongPassword: "ইমেইল বা পাসওয়ার্ড ভুল।",
+    emailInUse: "এই ইমেইল দিয়ে ইতিমধ্যে একটি অ্যাকাউন্ট আছে।",
+    weakPassword: "আরও শক্তিশালী পাসওয়ার্ড বেছে নিন।",
+    networkError: "সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।",
+  },
+};

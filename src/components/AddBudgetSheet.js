@@ -145,7 +145,7 @@ const AddBudgetSheet = forwardRef(({ existingBudgets = [] }, ref) => {
         style={{ flex: 1, paddingHorizontal: 20, paddingBottom: 24 }}
       >
         <Text className="text-lg font-bold mb-1" style={{ color: colors.text }}>
-          {editingBudget ? t("budget.editBudget") : t("budget.addBudget")}
+          {editingBudget ? t("Edit Budget") : t("Add Budget")}
         </Text>
         <Text className="text-xs text-gray-400 mb-2">
           {dayjs().format("MMMM YYYY")}
@@ -159,7 +159,7 @@ const AddBudgetSheet = forwardRef(({ existingBudgets = [] }, ref) => {
         />
 
         <Text className="text-xs font-medium text-gray-400 mb-2 ml-0.5">
-          {t("budget.selectCategory")}
+          {t("Select Category")}
         </Text>
         <View className="flex-row flex-wrap gap-2 mb-6">
           {EXPENSE_CATEGORIES.map((cat) => {

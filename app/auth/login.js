@@ -83,12 +83,14 @@ export default function Login() {
             onChangeText={setEmail}
             autoCapitalize="none"
             keyboardType="email-address"
+            placeholder="email@example.com"
           />
           <Input
             label={t("auth.password")}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
+            placeholder="******"
           />
 
           {error ? (

@@ -36,14 +36,14 @@ const QuickAddSheet = forwardRef((props, ref) => {
   const { colors, isDark } = useTheme();
   const { accounts } = useAccounts();
 
-  const [type, setType] = useState("expense");
+  const [type, setType] = useState("income");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState(null);
   const [account, setAccount] = useState(null);
   const [note, setNote] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const snapPoints = useMemo(() => ["78%"], []);
+  const snapPoints = useMemo(() => ["80%"], []);
 
   useImperativeHandle(ref, () => ({
     open: () => sheetRef.current?.present(),
@@ -53,7 +53,7 @@ const QuickAddSheet = forwardRef((props, ref) => {
   const reset = () => {
     setAmount("");
     setNote("");
-    setType("expense");
+    setType("income");
     setCategory(null);
   };
 
@@ -113,7 +113,7 @@ const QuickAddSheet = forwardRef((props, ref) => {
           className="flex-row rounded-2xl p-1 mb-2"
           style={{ backgroundColor: isDark ? "#0F172A" : "#F1F5F9" }}
         >
-          {["expense", "income"].map((k) => (
+          {["income", "expense"].map((k) => (
             <Pressable
               key={k}
               onPress={() => setType(k)}

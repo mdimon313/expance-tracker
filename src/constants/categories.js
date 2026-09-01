@@ -23,3 +23,5 @@ export const ACCOUNT_TYPES = [
 ];
 
 export const CURRENCIES = ["BDT", "USD", "EUR"];
+
+export const TRANSACTION_SORTS = ["newest", "oldest", "highest", "lowest"];

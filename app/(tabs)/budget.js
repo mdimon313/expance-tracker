@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import dayjs from "dayjs";
 import BudgetCard from "../../src/components/BudgetCard";
@@ -13,12 +13,24 @@ import { useLanguage } from "../../src/context/LanguageContext";
 import { deleteBudget } from "../../src/services/budgetService";
 
 export default function BudgetScreen() {
-  const { budgets, loading } = useBudgets();
-  const { transactions } = useTransactions();
+  const { budgets, loading, refreshing, refresh } = useBudgets();
+  const {
+    transactions,
+    refreshing: txRefreshing,
+    refresh: refreshTransactions,
+  } = useTransactions();
   const { colors } = useTheme();
   const { t } = useLanguage();
   const sheetRef = useRef(null);
   const currentMonth = dayjs().format("YYYY-MM");
+
+  // Spend totals are derived from transactions too, so refreshing this
+  // screen refreshes both sources that feed it.
+  const handleRefresh = () => {
+    refresh();
+    refreshTransactions();
+  };
+  const isRefreshing = refreshing || txRefreshing;
 
   const spentByCategory = useMemo(() => {
     const map = {};
@@ -35,6 +47,11 @@ export default function BudgetScreen() {
   }, [transactions]);
 
   const monthBudgets = budgets.filter((b) => b.month === currentMonth);
+  const isEmpty = !loading && monthBudgets.length === 0;
+
+  const handleEdit = (budget) => {
+    sheetRef.current?.open(budget);
+  };
 
   const handleDelete = (budget) => {
     Alert.alert(budget.category, "Delete this budget?", [
@@ -59,27 +76,38 @@ export default function BudgetScreen() {
         </Text>
       </View>
 
-      {!loading && monthBudgets.length === 0 ? (
-        <EmptyState
-          icon="pie-chart-outline"
-          title={t("budget.noBudgetsTitle")}
-          subtitle={t("budget.noBudgetsSubtitle")}
-        />
-      ) : (
-        <ScrollView
-          className="flex-1 px-5"
-          contentContainerStyle={{ paddingBottom: 140 }}
-        >
-          {monthBudgets.map((b) => (
+      <ScrollView
+        className="flex-1 px-5"
+        contentContainerStyle={
+          isEmpty ? { flexGrow: 1, paddingBottom: 140 } : { paddingBottom: 140 }
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+            tintColor="#10B981"
+            colors={["#10B981"]}
+          />
+        }
+      >
+        {isEmpty ? (
+          <EmptyState
+            icon="pie-chart-outline"
+            title={t("budget.noBudgetsTitle")}
+            subtitle={t("budget.noBudgetsSubtitle")}
+          />
+        ) : (
+          monthBudgets.map((b) => (
             <BudgetCard
               key={b.id}
               budget={b}
               spent={spentByCategory[b.category] || 0}
+              onEdit={handleEdit}
               onDelete={handleDelete}
             />
-          ))}
-        </ScrollView>
-      )}
+          ))
+        )}
+      </ScrollView>
 
       <FAB onPress={() => sheetRef.current?.open()} />
       <AddBudgetSheet ref={sheetRef} existingBudgets={monthBudgets} />

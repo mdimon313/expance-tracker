@@ -1,5 +1,11 @@
 import React, { useMemo } from "react";
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  RefreshControl,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PieChart, BarChart, LineChart } from "react-native-chart-kit";
 import dayjs from "dayjs";
@@ -13,7 +19,7 @@ import { CATEGORY_COLORS } from "../../src/constants/colors";
 const screenWidth = Dimensions.get("window").width - 40;
 
 export default function Analytics() {
-  const { transactions, loading } = useTransactions();
+  const { transactions, loading, refreshing, refresh } = useTransactions();
   const { colors, isDark } = useTheme();
   const { format } = useCurrency();
 
@@ -21,7 +27,9 @@ export default function Analytics() {
 
   const pieData = useMemo(() => {
     const totals = {};
-    expenses.forEach((t) => { totals[t.category] = (totals[t.category] || 0) + Number(t.amount); });
+    expenses.forEach((t) => {
+      totals[t.category] = (totals[t.category] || 0) + Number(t.amount);
+    });
     return Object.entries(totals).map(([category, amount]) => ({
       name: category,
       amount,
@@ -35,7 +43,9 @@ export default function Analytics() {
     const days = [...Array(7)].map((_, i) => dayjs().subtract(6 - i, "day"));
     const labels = days.map((d) => d.format("dd"));
     const data = days.map((d) =>
-      expenses.filter((t) => dayjs(t.date).isSame(d, "day")).reduce((s, t) => s + Number(t.amount), 0)
+      expenses
+        .filter((t) => dayjs(t.date).isSame(d, "day"))
+        .reduce((s, t) => s + Number(t.amount), 0),
     );
     return { labels, datasets: [{ data: data.length ? data : [0] }] };
   }, [expenses]);
@@ -50,20 +60,62 @@ export default function Analytics() {
 
   if (!loading && transactions.length === 0) {
     return (
-      <SafeAreaView className="flex-1" style={{ backgroundColor: colors.bg }} edges={["top"]}>
-        <EmptyState icon="stats-chart-outline" title="No data yet" subtitle="Add a few transactions to see your analytics." />
+      <SafeAreaView
+        className="flex-1"
+        style={{ backgroundColor: colors.bg }}
+        edges={["top"]}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={refresh}
+              tintColor="#10B981"
+              colors={["#10B981"]}
+            />
+          }
+        >
+          <EmptyState
+            icon="stats-chart-outline"
+            title="No data yet"
+            subtitle="Add a few transactions to see your analytics."
+          />
+        </ScrollView>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: colors.bg }} edges={["top"]}>
-      <ScrollView className="px-5 pt-2" contentContainerStyle={{ paddingBottom: 140 }}>
-        <Text className="text-2xl font-bold mb-4" style={{ color: colors.text }}>Analytics</Text>
+    <SafeAreaView
+      className="flex-1"
+      style={{ backgroundColor: colors.bg }}
+      edges={["top"]}
+    >
+      <ScrollView
+        className="px-5 pt-2"
+        contentContainerStyle={{ paddingBottom: 140 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={refresh}
+            tintColor="#10B981"
+            colors={["#10B981"]}
+          />
+        }
+      >
+        <Text
+          className="text-2xl font-bold mb-4"
+          style={{ color: colors.text }}
+        >
+          Analytics
+        </Text>
 
         {pieData.length > 0 && (
           <Card className="mb-4">
-            <Text className="font-semibold mb-2" style={{ color: colors.text }}>Expense by Category</Text>
+            <Text className="font-semibold mb-2" style={{ color: colors.text }}>
+              Expense by Category
+            </Text>
             <PieChart
               data={pieData}
               width={screenWidth}
@@ -77,7 +129,9 @@ export default function Analytics() {
         )}
 
         <Card className="mb-4">
-          <Text className="font-semibold mb-2" style={{ color: colors.text }}>Weekly Spending Trend</Text>
+          <Text className="font-semibold mb-2" style={{ color: colors.text }}>
+            Weekly Spending Trend
+          </Text>
           <LineChart
             data={weeklyTrend}
             width={screenWidth - 16}
@@ -89,16 +143,34 @@ export default function Analytics() {
         </Card>
 
         <Card className="mb-4">
-          <Text className="font-semibold mb-3" style={{ color: colors.text }}>Top Spending Categories</Text>
-          {pieData.sort((a, b) => b.amount - a.amount).slice(0, 5).map((c) => (
-            <View key={c.name} className="flex-row justify-between items-center py-2">
-              <View className="flex-row items-center">
-                <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: c.color, marginRight: 8 }} />
-                <Text style={{ color: colors.text }}>{c.name}</Text>
+          <Text className="font-semibold mb-3" style={{ color: colors.text }}>
+            Top Spending Categories
+          </Text>
+          {pieData
+            .sort((a, b) => b.amount - a.amount)
+            .slice(0, 5)
+            .map((c) => (
+              <View
+                key={c.name}
+                className="flex-row justify-between items-center py-2"
+              >
+                <View className="flex-row items-center">
+                  <View
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 5,
+                      backgroundColor: c.color,
+                      marginRight: 8,
+                    }}
+                  />
+                  <Text style={{ color: colors.text }}>{c.name}</Text>
+                </View>
+                <Text style={{ color: colors.text }} className="font-medium">
+                  {format(c.amount)}
+                </Text>
               </View>
-              <Text style={{ color: colors.text }} className="font-medium">{format(c.amount)}</Text>
-            </View>
-          ))}
+            ))}
         </Card>
       </ScrollView>
     </SafeAreaView>

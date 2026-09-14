@@ -1,11 +1,15 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
+
 import {
   initializeAuth,
   getReactNativePersistence,
   getAuth,
 } from "firebase/auth";
+
 import { initializeFirestore, persistentLocalCache } from "firebase/firestore";
+
 import { getStorage } from "firebase/storage";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 
@@ -19,24 +23,25 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_MEASUREMENT_ID,
 };
 
+// Temporary production debugging
+console.log("🔥 Firebase Config Check", {
+  apiKey: firebaseConfig.apiKey ? "PRESENT" : "MISSING",
+  authDomain: firebaseConfig.authDomain ? "PRESENT" : "MISSING",
+  projectId: firebaseConfig.projectId ? "PRESENT" : "MISSING",
+  storageBucket: firebaseConfig.storageBucket ? "PRESENT" : "MISSING",
+  messagingSenderId: firebaseConfig.messagingSenderId ? "PRESENT" : "MISSING",
+  appId: firebaseConfig.appId ? "PRESENT" : "MISSING",
+});
+
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-// Auth: use AsyncStorage-backed persistence on native so sessions survive app restarts.
 export const auth =
   Platform.OS === "web"
     ? getAuth(app)
-    : (() => {
-        try {
-          return initializeAuth(app, {
-            persistence: getReactNativePersistence(AsyncStorage),
-          });
-        } catch (e) {
-          // initializeAuth throws if already initialized (e.g. Fast Refresh)
-          return getAuth(app);
-        }
-      })();
+    : initializeAuth(app, {
+        persistence: getReactNativePersistence(AsyncStorage),
+      });
 
-// Firestore with offline persistence enabled (requirement #42 - offline support)
 export const db = initializeFirestore(app, {
   localCache: persistentLocalCache(),
 });
